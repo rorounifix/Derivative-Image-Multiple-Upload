@@ -101,4 +101,7 @@ venv.bak/
 /site
 
 # mypy
+
+#Django
+media
 .mypy_cache/
