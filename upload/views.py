@@ -2,28 +2,47 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import TemplateView
+from django.views import generic
+from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import FileSystemStorage
+import os
+from django.conf import settings
+
 
 from .models import ImageModel
 
-class HomeView(TemplateView):
+class HomeView(generic.TemplateView):
     template_name = 'upload/index.html'
 
 
-class AlbumView(TemplateView):
+class AlbumView(generic.ListView):
+    model = ImageModel
+    # paginate_by = 6
     template_name = 'upload/album.html'
+    context_object_name = 'imagelist'
 
 
+
+
+def delete(request, id):
+    d = ImageModel.objects.get(pk=id)
+    name = d.image_name
+    d.delete()
+    os.remove(os.path.join(settings.MEDIA_ROOT, name))
+
+    return HttpResponseRedirect(reverse('upload:album'))
+
+@csrf_protect
 def fileupload(request):
-
     fs = FileSystemStorage()
-    for image in request.FILES.getlist('images'):
-        name = fs.save(image.name, image)
+    for img in request.FILES.getlist('images'):
+        print(img.file)
+        name = fs.save(img.name, img)
         file_url = fs.url(name)
         m = ImageModel(image_name=name, image_url=file_url, image_date=timezone.now())
         m.save()
     return HttpResponseRedirect(reverse('upload:index'))
+
 
 
 #

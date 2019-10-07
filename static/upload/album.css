@@ -107,3 +107,13 @@ body {
 .mastfoot {
   color: #a7fff682;
 }
+
+
+/*
+* Thumbnail
+*/
+
+.thumbnail img {
+    height:250px;
+    width:100%;
+}
