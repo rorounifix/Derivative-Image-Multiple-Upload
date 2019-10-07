@@ -6,6 +6,9 @@ from django.utils import timezone
 def index(request):
     return render(request, 'upload/index.html')
 
+def album(request):
+    return render(request, 'upload/album.html')
+
 #
 #
 # class UploadView(generic.ListView):
