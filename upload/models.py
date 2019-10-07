@@ -1,3 +1,9 @@
 from django.db import models
 
-# Create your models here.
+class ImageModel(models.Model):
+    image_name = models.CharField(max_length=1000)
+    image_date = models.DateField()
+    image_url = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.image_name

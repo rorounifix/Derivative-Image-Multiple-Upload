@@ -32,9 +32,45 @@
         <h1 class="cover-heading">Upload Your Memories</h1>
         <p class="lead">Image thumbler can upload multiple and edit your picture on your own.</p>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Start now</a>
+          <a href="#" class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#exampleModal">Start now</a>
         </p>
       </main>
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Upload Files</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="container mt-5">
+                <form method="post" enctype="multipart/form-data" action="{% url 'upload:fileupload' %}" >
+                  {% csrf_token %}
+                  <div class="form-group">
+                  <div class="form-group">
+                    <div class="custom-file">
+                      <input type="file" name="images" multiple class="custom-file-input" id="customFile">
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" name="upload" value="upload" id="upload" class="btn btn-block btn-dark"><i class="fa fa-fw fa-upload"></i> Upload</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+          </div>
+        </div>
+      </div>
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
@@ -49,5 +85,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="{% static 'upload/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'upload/cover.js' %}"></script>
   </body>
 </html>

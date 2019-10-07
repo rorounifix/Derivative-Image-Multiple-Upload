@@ -5,7 +5,8 @@ from . import views
 app_name = 'upload'
 urlpatterns = [
     # /
-    path('', views.index, name='index'),
-    path('album/', views.album, name='album'),
+    path('', views.HomeView.as_view(), name='index'),
+    path('album/', views.AlbumView.as_view(), name='album'),
+    path('fileupload/', views.fileupload, name='fileupload'),
 
 ]

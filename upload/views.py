@@ -1,13 +1,30 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.views import generic
+from django.urls import reverse
 from django.utils import timezone
+from django.views.generic import TemplateView
+from django.core.files.storage import FileSystemStorage
 
-def index(request):
-    return render(request, 'upload/index.html')
+from .models import ImageModel
 
-def album(request):
-    return render(request, 'upload/album.html')
+class HomeView(TemplateView):
+    template_name = 'upload/index.html'
+
+
+class AlbumView(TemplateView):
+    template_name = 'upload/album.html'
+
+
+def fileupload(request):
+
+    fs = FileSystemStorage()
+    for image in request.FILES.getlist('images'):
+        name = fs.save(image.name, image)
+        file_url = fs.url(name)
+        m = ImageModel(image_name=name, image_url=file_url, image_date=timezone.now())
+        m.save()
+    return HttpResponseRedirect(reverse('upload:index'))
+
 
 #
 #
