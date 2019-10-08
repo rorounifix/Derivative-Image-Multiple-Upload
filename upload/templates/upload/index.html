@@ -29,6 +29,16 @@
       </header>
 
       <main role="main" class="inner cover">
+        {% if messages %}
+          {% for msg in messages %}
+            <div class="alert {{ msg.tags }} alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              {{ msg }}
+            </div>
+          {% endfor %}
+        {% endif %}
         <h1 class="cover-heading">Upload Your Memories</h1>
         <p class="lead">Image thumbler can upload multiple and edit your picture on your own.</p>
         <p class="lead">

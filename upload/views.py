@@ -9,6 +9,7 @@ import os
 from django.conf import settings
 from .helper.imgDeriv import image_deriv
 from .helper.file_validation import validation
+from django.contrib import messages
 
 
 
@@ -17,9 +18,11 @@ from .models import ImageModel, ImageDerivModel
 class HomeView(generic.TemplateView):
     template_name = 'upload/index.html'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(HomeView.self).get_context_data(*args, **kwargs)
-        return context
+
+    # def get(self, request):
+    #     messages.success(request, 'test')
+    #     return render(request, self.template_name)
+
 
 
 class AlbumView(generic.ListView):
@@ -49,6 +52,7 @@ def fileupload(request):
     fs = FileSystemStorage()
     for img in request.FILES.getlist('images'):
         if not validation(img.name):
+            messages.error(request, 'Invalid File!')
             return HttpResponseRedirect(reverse('upload:index'))
         name = fs.save(img.name, img)
         file_url = fs.url(name)
@@ -75,7 +79,7 @@ def fileupload(request):
                 deriv_type = deriv_name,
             )
             m.save()
-
+        messages.success(request, 'Success')
     return HttpResponseRedirect(reverse('upload:index'))
 
 
