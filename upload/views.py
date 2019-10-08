@@ -7,9 +7,11 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import FileSystemStorage
 import os
 from django.conf import settings
+from .helper.imgDeriv import image_deriv
 
 
-from .models import ImageModel
+
+from .models import ImageModel, ImageDerivModel
 
 class HomeView(generic.TemplateView):
     template_name = 'upload/index.html'
@@ -41,11 +43,31 @@ def delete(request, id):
 def fileupload(request):
     fs = FileSystemStorage()
     for img in request.FILES.getlist('images'):
-        print(img.file)
         name = fs.save(img.name, img)
         file_url = fs.url(name)
-        m = ImageModel(image_name=name, image_url=file_url, image_date=timezone.now())
-        m.save()
+        image_deriv(settings.MEDIA_ROOT + '\\' + name)
+        orig_image = ImageModel(image_name=name, image_url=file_url, image_date=timezone.now())
+        orig_image.save()
+        list_of_edge = [
+            "-canny.jpg",
+            "-sobelx.jpg",
+            "-sobely.jpg",
+            "-sobel.jpg",
+            "-prewitt_x.jpg",
+            "-prewitt_y.jpg",
+            "-prewitt.jpg",
+             ]
+
+        for deriv_name in list_of_edge:
+            split_name = img.name.split('.')[0] + deriv_name
+            m = ImageDerivModel(
+                image_deriv_fk=orig_image,
+                image_name=split_name,
+                image_date=timezone.now(),
+                image_url='/media/%s' % split_name
+            )
+            m.save()
+
     return HttpResponseRedirect(reverse('upload:index'))
 
 
