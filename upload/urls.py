@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='index'),
     path('fileupload/', views.fileupload, name='fileupload'),
     path('album/', views.AlbumView.as_view(), name='album'),
-    path('album/delete/<id>', views.delete, name='delete'),
+    path('album/delete/<int:id>', views.delete, name='delete'),
+    path('album/edit/<int:pk>', views.EditView.as_view(), name="edit"),
 
 ]

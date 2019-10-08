@@ -12,7 +12,7 @@
     <link href="{% static 'upload/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'upload/album.css' %}" rel="stylesheet">
+    <link href="{% static 'upload/edit.css' %}" rel="stylesheet">
   </head>
 
   <body class="text-center">
@@ -36,7 +36,7 @@
 
             <section class=" text-center">
               <div class="container">
-                <h1 class="jumbotron-heading">Album</h1>
+                <h1 class="jumbotron-heading">Derivative Images</h1>
                 <br />
                 <br />
                 <br />
@@ -45,7 +45,6 @@
 
               <div class="container">
                 <div class="row">
-                  {% for image in imagelist %}
                   <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
                       <div class="thumbnail">
@@ -63,7 +62,6 @@
                       </div>
                     </div>
                   </div>
-                  {% endfor %}
 
                   <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">

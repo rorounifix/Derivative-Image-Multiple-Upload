@@ -22,6 +22,12 @@ class AlbumView(generic.ListView):
     context_object_name = 'imagelist'
 
 
+class EditView(generic.DetailView):
+    model = ImageModel
+    template_name = 'upload/edit.html'
+    context_object_name = 'image'
+
+
 
 
 def delete(request, id):
@@ -29,7 +35,6 @@ def delete(request, id):
     name = d.image_name
     d.delete()
     os.remove(os.path.join(settings.MEDIA_ROOT, name))
-
     return HttpResponseRedirect(reverse('upload:album'))
 
 @csrf_protect
