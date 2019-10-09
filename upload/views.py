@@ -82,7 +82,11 @@ def fileupload(request):
         messages.success(request, 'Success')
     return HttpResponseRedirect(reverse('upload:index'))
 
-
+# @csrf_protect
+def resize(request):
+    if request.method == 'POST':
+        pass
+    return HttpResponseRedirect(reverse('upload:album'))
 
 #
 #

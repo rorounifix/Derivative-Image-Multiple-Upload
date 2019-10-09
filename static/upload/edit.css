@@ -117,3 +117,8 @@ body {
     height:250px;
     width:100%;
 }
+
+.modal-body{
+    height: 500%;
+    overflow-y: auto;
+}

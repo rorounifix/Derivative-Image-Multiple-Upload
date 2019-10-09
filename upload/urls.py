@@ -10,5 +10,6 @@ urlpatterns = [
     path('album/', views.AlbumView.as_view(), name='album'),
     path('album/delete/<int:id>', views.delete, name='delete'),
     path('album/edit/<int:pk>', views.EditView.as_view(), name="edit"),
+    path('album/resize/', views.resize, name="resize"),
 
 ]
